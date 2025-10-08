@@ -1,0 +1,28 @@
+# Archivos grandes que exceden el límite de GitHub
+public/models/logo3d.glb
+public/videos/videobeato16.mov
+public/videos/*.mov
+public/videos/*.mp4
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Dependencias
+node_modules/
+*/node_modules/
+
+# Archivos de build
+dist/
+build/
+
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*\"public/videos/videobeato16.mov\" 
