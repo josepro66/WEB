@@ -157,12 +157,12 @@ function App() {
   };
 
   const menuItems = [
-    { id: 'beato8', name: 'BEATO8', icon: 'textures/beato.png', isImage: true },
-    { id: 'beato16', name: 'BEATO16', icon: 'textures/beato16.png', isImage: true },
-    { id: 'knobo', name: 'KNOBO', icon: 'textures/knobo.png', isImage: true },
-    { id: 'mixo', name: 'MIXO', icon: 'textures/mixo.png', isImage: true },
-    { id: 'loopo', name: 'LOOPO', icon: 'textures/loopo.png', isImage: true },
-    { id: 'fado', name: 'FADO', icon: 'textures/fado.png', isImage: true }
+    { id: 'beato8', name: 'BEATO8', icon: '/textures/beato.png', isImage: true },
+    { id: 'beato16', name: 'BEATO16', icon: '/textures/beato16.png', isImage: true },
+    { id: 'knobo', name: 'KNOBO', icon: '/textures/knobo.png', isImage: true },
+    { id: 'mixo', name: 'MIXO', icon: '/textures/mixo.png', isImage: true },
+    { id: 'loopo', name: 'LOOPO', icon: '/textures/loopo.png', isImage: true },
+    { id: 'fado', name: 'FADO', icon: '/textures/fado.png', isImage: true }
   ] as const;
 
   // Mostrar loading mientras se verifica el usuario

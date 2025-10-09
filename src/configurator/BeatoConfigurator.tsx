@@ -846,7 +846,7 @@ const MidiConfigurator: React.FC<MidiConfiguratorProps> = ({ onProductChange, cu
       Swal.fire({
         title: 'Selecciona una parte',
         text: 'Haz clic en una pieza del controlador para aplicar el color.',
-        imageUrl: 'models/logo.png', // Cambia por la ruta de tu ilustración
+        imageUrl: '/models/logo.png', // Cambia por la ruta de tu ilustración
         imageWidth: 120,
         imageHeight: 120,
         background: '#232846',
@@ -1148,7 +1148,7 @@ Best regards.`;
     },
     { 
       id: 'chasis', 
-      icon: 'beato.png', 
+      icon: '/textures/beato.png', 
       isImage: true,
       title: 'Customize Chassis - Change main body color'
     },
@@ -1548,7 +1548,7 @@ Best regards.`;
                   >
                     {item.isImage ? (
                       <img 
-                        src={`textures/${item.icon}`} 
+                        src={`${item.icon}`} 
                         alt="Menu icon" 
                         style={{
                           width: 'clamp(20px, 5vw, 40px)',

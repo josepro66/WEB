@@ -62,7 +62,7 @@ function PlasmaBackground() {
 
 // Componente del logo 3D
 function Logo3D() {
-  const gltf = useGLTF('/public/models/logo3d.glb')
+  const gltf = useGLTF('/models/logo3d.glb')
 
   return (
     <Float speed={1.5} rotationIntensity={0} floatIntensity={0.1}>
@@ -72,7 +72,7 @@ function Logo3D() {
 }
 
 // Preload del modelo
-useGLTF.preload(new URL('/models/logo3d.glb', import.meta.url).href)
+useGLTF.preload('/models/logo3d.glb')
 
 const Hero: React.FC = () => {
   return (

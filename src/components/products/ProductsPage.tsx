@@ -281,7 +281,7 @@ function ProductsPage() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: `url('images/fondonuestrosproductos_Mesa de trabajo 1.png')`,
+          backgroundImage: `url('/images/fondonuestrosproductos.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
           zIndex: 1

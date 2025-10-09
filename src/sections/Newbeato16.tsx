@@ -17,7 +17,7 @@ const Newbeato16: React.FC = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: `url('/images/fondonewbeato16.png')`,
+          backgroundImage: `url(${import.meta.env.BASE_URL}/images/fondonewbeato16.png)`,
           zIndex: 1000000
         }}
       />
@@ -33,7 +33,7 @@ const Newbeato16: React.FC = () => {
           transition={{ duration: 0.8 }}
         >
           <img 
-            src="/images/titulobeato16.png" 
+            src={`${import.meta.env.BASE_URL}/images/titulobeato16.png`} 
             alt="NEW BEATO16"
             className="max-w-full h-auto mx-auto"
             style={{ maxHeight: '120px' }}
@@ -43,7 +43,7 @@ const Newbeato16: React.FC = () => {
         {/* Imagen del producto */}
         <div className="w-full h-[400px] md:h-[600px] relative flex items-center justify-center -mt-24" style={{ zIndex: 1000002 }}>
           <img 
-            src="images/beato16.png" 
+            src={`${import.meta.env.BASE_URL}images/beato16.png`} 
             alt="BEATO16 Controlador MIDI"
             className="max-w-full max-h-full object-contain"
           />

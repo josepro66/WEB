@@ -1564,7 +1564,7 @@ Best regards.`;
           </div>
         )}
       </div>
-    // </PayPalScriptProvider>
+    </>
   );
 };
 

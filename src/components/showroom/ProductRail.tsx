@@ -6,12 +6,12 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const items = [
-  { title: 'Beato 16', img: 'images/products/BEATO16.png' },
-  { title: 'Mixo', img: 'images/products/MIXO.png' },
-  { title: 'Beato 8', img: 'images/products/BEATO.png' },
-  { title: 'Fado', img: 'images/products/FADO.png' },
-  { title: 'Loopo', img: 'images/products/LOOPO.png' },
-  { title: 'Knobo', img: 'images/products/KNOBO.png' },
+  { title: 'Beato 16', img: '/images/products/BEATO16.png' },
+  { title: 'Mixo', img: '/images/products/MIXO.png' },
+  { title: 'Beato 8', img: '/images/products/BEATO.png' },
+  { title: 'Fado', img: '/images/products/FADO.png' },
+  { title: 'Loopo', img: '/images/products/LOOPO.png' },
+  { title: 'Knobo', img: '/images/products/KNOBO.png' },
 ]
 
 export default function ProductRail() {

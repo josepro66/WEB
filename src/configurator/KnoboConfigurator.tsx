@@ -1598,73 +1598,7 @@ Best regards.`;
         </button>
       )}
 
-      {/* Modal de pago */}
-      {/* {showPaymentModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-          <div className="relative bg-[#3a4060] rounded-2xl shadow-2xl border-2 border-[#a259ff] p-4 md:py-4 md:px-8 w-full max-w-4xl mx-4 animate-fade-in">
-            <button onClick={() => setShowPaymentModal(false)} className="absolute top-3 right-3 text-gray-400 hover:text-pink-400 text-2xl font-bold">×</button>
-            <h2 className="text-3xl md:text-4xl font-bold text-purple-400 mb-4 text-center tracking-widest">PAGO SEGURO - KNOBO</h2>
-            <div className="flex flex-col md:flex-row gap-4 items-center mb-4">
-              <div className="w-full max-w-[320px] md:max-w-[380px] aspect-[4/3] flex items-center justify-center ml-16 md:ml-24">
-                {screenshot && (
-                  <img src={screenshot} alt="Custom controller" className="w-full h-full object-contain" style={{ background: 'none', boxShadow: 'none', border: 'none' }} />
-                )}
-              </div>
-              <div className="flex-1 mt-8 md:mt-0">
-                <h3 className="text-xl font-semibold mb-2 text-cyan-400">Tu configuración:</h3>
-                <ul className="text-base space-y-1">
-                  <li><b>Chassis:</b> {chosenColors.chasis}</li>
-                  <li><b>Buttons:</b> {Object.values(chosenColors.buttons).join(', ') || 'Default'}</li>
-                  <li><b>Knobs:</b> {Object.values(chosenColors.knobs).join(', ') || 'Default'}</li>
-                </ul>
-              </div>
-            </div>
-            {/* Selector de moneda */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-3 text-cyan-400">Select your currency:</h3>
-              <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => setSelectedCurrency('USD')}
-                  className={`px-6 py-3 rounded-lg font-bold text-lg transition-all ${
-                    selectedCurrency === 'USD'
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-[0_0_12px_2px_#3b82f6]'
-                      : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
-                  }`}
-                >
-                  USD $100.00
-                </button>
-                <button
-                  onClick={() => setSelectedCurrency('COP')}
-                  className={`px-6 py-3 rounded-lg font-bold text-lg transition-all ${
-                    selectedCurrency === 'COP'
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-[0_0_12px_2px_#3b82f6]'
-                      : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
-                  }`}
-                >
-                  COP $400,000
-                </button>
-              </div>
-              <p className="text-center text-sm text-gray-400 mt-2">
-                Selected price: {selectedCurrency} {getKnoboCurrencyConfig(selectedCurrency).symbol}{getKnoboCurrencyConfig(selectedCurrency).amount}
-              </p>
-            </div>
 
-            <div className="flex flex-col gap-4 mt-4">
-                              {/* PayPal temporarily disabled - only PayU available */}
-                <div className="w-full py-3 rounded-lg bg-gray-600 text-gray-400 font-bold text-lg text-center">
-                  PayPal temporarily unavailable
-                </div>
-                <button
-                  onClick={handlePayUCheckoutLocal}
-                  className="w-full py-3 rounded-lg bg-gradient-to-r from-green-400 to-cyan-400 text-white font-bold text-lg shadow-[0_0_12px_2px_#0ff580] hover:scale-105 transition-all mt-2"
-                >
-                  Pay with PayU ({selectedCurrency} {getKnoboCurrencyConfig(selectedCurrency).symbol}{getKnoboCurrencyConfig(selectedCurrency).amount})
-                </button>
-              </div>
-              <p className="text-xs text-gray-400 mt-6 text-center">Your purchase is 100% safe and protected.</p>
-          </div>
-        </div>
-               */}
       
       {/* Modal de carrito */}
       {showCartModal && (
