@@ -4,32 +4,32 @@ import ProductRail from '../components/showroom/ProductRail'
 
 const products = [
   {
-    image: '/images/products/KNOBO.png',
+    image: 'images/products/KNOBO.png',
     title: 'Knobo',
     description: '$130 — 8 perillas asignables para un control preciso y creativo.',
   },
   {
-    image: '/images/products/LOOPO.png',
+    image: 'images/products/LOOPO.png',
     title: 'LOOPO',
     description: '£130 — Compacto, dinámico y listo para la acción.',
   },
   {
-    image: '/images/products/FADO.png',
+    image: 'images/products/FADO.png',
     title: 'FADO',
     description: '$150 — Movimiento fluido y expresivo.',
   },
   {
-    image: '/images/products/BEATO.png',
+    image: 'images/products/BEATO.png',
     title: 'Beato 8',
     description: '$185 — Compacto y potente.',
   },
   {
-    image: '/images/products/MIXO.png',
+    image: 'images/products/MIXO.png',
     title: 'Mixo',
     description: '$200 — Flujo total, mezcla a tu manera.',
   },
   {
-    image: '/images/products/BEATO16.png',
+    image: 'images/products/BEATO16.png',
     title: 'Beato 16 (Nuevo)',
     description: '$250 — Más control que nunca.',
   },
@@ -42,7 +42,7 @@ export default function ProductsSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: `url('/images/fondonuestrosproductos.png')`,
+          backgroundImage: `url('images/fondonuestrosproductos.png')`,
           zIndex: 1000000
         }}
       />
