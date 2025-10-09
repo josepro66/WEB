@@ -48,21 +48,6 @@ export default function ProductsSection() {
       />
       
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" style={{ zIndex: 1000001 }}>
-        {/* Debug: Verificar si la imagen se carga */}
-        <div className="absolute top-4 left-4 text-white text-xs bg-red-500 p-2 rounded z-10">
-          Debug: Verificando imagen de fondo
-        </div>
-        
-        {/* Debug: Imagen de prueba */}
-        <div className="absolute top-16 left-4 w-32 h-20 border-2 border-white z-10">
-          <img 
-            src="images/fondonuestrosproductos.png" 
-            alt="Debug background" 
-            className="w-full h-full object-cover"
-            onLoad={() => console.log('Imagen cargada correctamente')}
-            onError={() => console.log('Error al cargar la imagen')}
-          />
-        </div>
         
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Nuestros Productos</h2>
