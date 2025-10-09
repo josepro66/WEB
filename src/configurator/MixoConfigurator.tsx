@@ -1089,16 +1089,9 @@ Best regards.`;
     }
   };
 
-  const [sidebarFiles, setSidebarFiles] = useState<File[]>([]);
-  const handleSidebarFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setSidebarFiles(Array.from(e.target.files));
-    }
-  };
-
-      return (
-      // <PayPalScriptProvider options={{ clientId: PAYPAL_CLIENT_ID, currency: "USD" }}>
-        {/* Pantalla de rotación para móviles */}
+  return (
+    <>
+      {/* Pantalla de rotación para móviles */}
         {!isLandscape && window.innerWidth <= 768 && (
           <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center text-white text-center p-8">
             <div className="mb-8">
