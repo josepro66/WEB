@@ -2,13 +2,11 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
 
-import { PAYU_CONFIG, getKnoboCurrencyConfig } from './payuConfig.js';
-import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
-import type { ReactPayPalScriptOptions } from '@paypal/react-paypal-js';
+
 import Swal from 'sweetalert2';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { getPayuSignature } from './api';
+
 import html2canvas from 'html2canvas';
 
 
@@ -1019,102 +1017,104 @@ Best regards.`;
 
   // Abrir modal de pago y capturar imagen con vista frontal fija
   const handleOpenPayment = useCallback(() => {
-    if (!rendererRef.current || !sceneRef.current || !cameraRef.current) return;
-    // Guardar posición, target y FOV originales
-    const originalPos = cameraRef.current.position.clone();
-    const originalTarget = controlsRef.current ? controlsRef.current.target.clone() : null;
-    const originalFov = cameraRef.current.fov;
+    // if (!rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+    // // Guardar posición, target y FOV originales
+    // const originalPos = cameraRef.current.position.clone();
+    // const originalTarget = controlsRef.current ? controlsRef.current.target.clone() : null;
+    // const originalFov = cameraRef.current.fov;
 
-    // Mover a la posición inicial (frontal) - usar la vista normal mejorada
-    const initialPos = CAMERA_VIEWS.normal.pos.clone();
-    const initialTarget = CAMERA_VIEWS.normal.target.clone();
-    cameraRef.current.position.copy(initialPos);
-    cameraRef.current.fov = 35; // FOV ligeramente más amplio para mejor vista
-    cameraRef.current.updateProjectionMatrix();
-    if (controlsRef.current) {
-      controlsRef.current.target.copy(initialTarget);
-      controlsRef.current.update();
-    }
+    // // Mover a la posición inicial (frontal) - usar la vista normal mejorada
+    // const initialPos = CAMERA_VIEWS.normal.pos.clone();
+    // const initialTarget = CAMERA_VIEWS.normal.target.clone();
+    // cameraRef.current.position.copy(initialPos);
+    // cameraRef.current.fov = 35; // FOV ligeramente más amplio para mejor vista
+    // cameraRef.current.updateProjectionMatrix();
+    // if (controlsRef.current) {
+    //   controlsRef.current.target.copy(initialTarget);
+    //   controlsRef.current.update();
+    // }
 
-    setTimeout(() => {
-      rendererRef.current!.render(sceneRef.current!, cameraRef.current!);
-      const img = rendererRef.current!.domElement.toDataURL('image/png');
-      setScreenshot(img);
+    // setTimeout(() => {
+    //   rendererRef.current!.render(sceneRef.current!, cameraRef.current!);
+    //   const img = rendererRef.current!.domElement.toDataURL('image/png');
+    //   setScreenshot(img);
 
-      // Restaurar posición, target y FOV originales
-      cameraRef.current!.position.copy(originalPos);
-      cameraRef.current!.fov = originalFov;
-      cameraRef.current!.updateProjectionMatrix();
-      if (controlsRef.current && originalTarget) {
-        controlsRef.current.target.copy(originalTarget);
-        controlsRef.current.update();
-      }
-      setShowPaymentModal(true);
-    }, 50);
+    //   // Restaurar posición, target y FOV originales
+    //   cameraRef.current!.position.copy(originalPos);
+    //   cameraRef.current!.fov = originalFov;
+    //   cameraRef.current!.updateProjectionMatrix();
+    //   if (controlsRef.current && originalTarget) {
+    //     controlsRef.current.target.copy(originalTarget);
+    //     controlsRef.current.update();
+    //   }
+    //   setShowPaymentModal(true);
+    // }, 50);
+    alert('Payment functionality is disabled in static mode.');
   }, [rendererRef, sceneRef, cameraRef, controlsRef, CAMERA_VIEWS, setScreenshot, setShowPaymentModal]);
 
   // Función para manejar el checkout de PayU localmente
   const handlePayUCheckoutLocal = () => {
-    const popupTarget = 'payu_checkout';
-    let popupRef = window.open('', popupTarget);
+    // const popupTarget = 'payu_checkout';
+    // let popupRef = window.open('', popupTarget);
     
-    if (!popupRef) {
-      alert('Please allow popups to continue with payment');
-      return;
-    }
+    // if (!popupRef) {
+    //   alert('Please allow popups to continue with payment');
+    //   return;
+    // }
 
-    // Obtener configuración de la moneda seleccionada
-    const currencyConfig = getKnoboCurrencyConfig(selectedCurrency);
+    // // Obtener configuración de la moneda seleccionada
+    // const currencyConfig = getKnoboCurrencyConfig(selectedCurrency);
     
-    // Generar firma localmente
-    const signatureString = `${PAYU_CONFIG.API_KEY}~${PAYU_CONFIG.MERCHANT_ID}~${payuData.referenceCode}~${currencyConfig.amount}~${selectedCurrency}`;
-    const signature = MD5(signatureString).toString();
+    // // Generar firma localmente
+    // const signatureString = `${PAYU_CONFIG.API_KEY}~${PAYU_CONFIG.MERCHANT_ID}~${payuData.referenceCode}~${currencyConfig.amount}~${selectedCurrency}`;
+    // const signature = MD5(signatureString).toString();
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = currencyConfig.url;
-    form.target = popupTarget;
+    // const form = document.createElement('form');
+    // form.method = 'POST';
+    // form.action = currencyConfig.url;
+    // form.target = popupTarget;
 
-    const formData = {
-      merchantId: PAYU_CONFIG.MERCHANT_ID,
-      accountId: currencyConfig.accountId,
-      description: `Knobo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
-      referenceCode: payuData.referenceCode,
-      amount: currencyConfig.amount,
-      currency: selectedCurrency,
-      buyerEmail: payuData.buyerEmail,
-      signature: signature,
-      test: PAYU_CONFIG.TEST_MODE ? '1' : '0',
-      confirmationUrl: PAYU_CONFIG.CONFIRMATION_URL,
-      responseUrl: PAYU_CONFIG.RESPONSE_URL,
-      // Parámetros para forzar moneda y país
-      lng: currencyConfig.language,
-      // Datos del modal para el webhook
-      extra1: 'Knobo',
-      extra2: chosenColors.chasis || 'Custom',
-      extra3: `Applied colors - Buttons: ${Object.keys(chosenColors.buttons || {}).length}, Knobs: ${Object.keys(chosenColors.knobs || {}).length}`,
-      extra4: `Knobo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
-      // Additional parameters for PayU
-      payerCountry: 'CO',
-      payerCity: 'Bogota',
-      payerPhone: '+57-300-1234567',
-      // Forzar configuración regional
-      country: 'CO',
-      // Evitar detección automática de ubicación
-      ipAddress: '8.8.4.4'
-    };
+    // const formData = {
+    //   merchantId: PAYU_CONFIG.MERCHANT_ID,
+    //   accountId: currencyConfig.accountId,
+    //   description: `Knobo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
+    //   referenceCode: payuData.referenceCode,
+    //   amount: currencyConfig.amount,
+    //   currency: selectedCurrency,
+    //   buyerEmail: payuData.buyerEmail,
+    //   signature: signature,
+    //   test: PAYU_CONFIG.TEST_MODE ? '1' : '0',
+    //   confirmationUrl: PAYU_CONFIG.CONFIRMATION_URL,
+    //   responseUrl: PAYU_CONFIG.RESPONSE_URL,
+    //   // Parámetros para forzar moneda y país
+    //   lng: currencyConfig.language,
+    //   // Datos del modal para el webhook
+    //   extra1: 'Knobo',
+    //   extra2: chosenColors.chasis || 'Custom',
+    //   extra3: `Applied colors - Buttons: ${Object.keys(chosenColors.buttons || {}).length}, Knobs: ${Object.keys(chosenColors.knobs || {}).length}`,
+    //   extra4: `Knobo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
+    //   // Additional parameters for PayU
+    //   payerCountry: 'CO',
+    //   payerCity: 'Bogota',
+    //   payerPhone: '+57-300-1234567',
+    //   // Forzar configuración regional
+    //   country: 'CO',
+    //   // Evitar detección automática de ubicación
+    //   ipAddress: '8.8.4.4'
+    // };
 
-    Object.entries(formData).forEach(([key, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      form.appendChild(input);
-    });
+    // Object.entries(formData).forEach(([key, value]) => {
+    //   const input = document.createElement('input');
+    //   input.type = 'hidden';
+    //   input.name = key;
+    //   input.value = value;
+    //   form.appendChild(input);
+    // });
 
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+    // document.body.appendChild(form);
+    // form.submit();
+    // document.body.removeChild(form);
+    alert('Payment functionality is disabled in static mode.');
   };
 
   // Obtener título según la vista
@@ -1591,15 +1591,15 @@ Best regards.`;
       {/* Botón de finalizar (solo visible en vista normal) */}
       {currentView === 'normal' && (
         <button 
-          onClick={handleFinalizeOpenModal}
+          onClick={() => alert('Payment functionality is disabled in static mode.')}
           className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 text-lg font-bold uppercase tracking-wide text-black bg-purple-400 border-none rounded cursor-pointer transition-all duración-200 shadow-lg hover:bg-yellow-200 hover:scale-105 hover:shadow-xl shadow-[0_0_8px_2px_#a259ff80,0_0_16px_4px_#0ff5]"
         >
-          Finish and Send Configuration
+          Configuration Summary (Payments Disabled)
         </button>
       )}
 
       {/* Modal de pago */}
-      {showPaymentModal && (
+      {/* {showPaymentModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
           <div className="relative bg-[#3a4060] rounded-2xl shadow-2xl border-2 border-[#a259ff] p-4 md:py-4 md:px-8 w-full max-w-4xl mx-4 animate-fade-in">
             <button onClick={() => setShowPaymentModal(false)} className="absolute top-3 right-3 text-gray-400 hover:text-pink-400 text-2xl font-bold">×</button>
@@ -1664,7 +1664,7 @@ Best regards.`;
               <p className="text-xs text-gray-400 mt-6 text-center">Your purchase is 100% safe and protected.</p>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Modal de carrito */}
       {showCartModal && (
@@ -1689,7 +1689,7 @@ Best regards.`;
               </div>
             </div>
             <div className="flex flex-col gap-4 mt-6 w-full">
-              <PayPalButtons
+              {/* PayPalButtons
                 style={{ layout: "horizontal", color: "blue", shape: "rect", label: "paypal", height: 48 }}
                 createOrder={(data, actions) => {
                   if (!actions.order) return Promise.reject("PayPal actions.order no disponible");
@@ -1733,8 +1733,8 @@ Best regards.`;
                 onError={(err) => {
                   alert("Error en el pago con PayPal: " + err);
                 }}
-              />
-              <form action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" method="post" target="_blank" className="w-full flex flex-col items-center">
+              /> */}
+              {/* <form action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" method="post" target="_blank" className="w-full flex flex-col items-center">
                 <input type="hidden" name="merchantId" value="508029" />
                 <input type="hidden" name="accountId" value="512321" />
                 <input type="hidden" name="description" value="Custom MIDI controller" />
@@ -1749,7 +1749,7 @@ Best regards.`;
                 >
                   Pagar con PayU
                 </button>
-              </form>
+              </form> */}
             </div>
             <p className="text-xs text-gray-400 mt-6 text-center">Tu compra es 100% segura y protegida.</p>
           </div>

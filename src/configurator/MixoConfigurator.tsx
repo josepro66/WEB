@@ -144,48 +144,48 @@ const MixoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
   // INICIO DE LAS FUNCIONES DE PAGO SEGURO
   // ==================================================================
   
-  /**
+  /*
    * Llama al backend para crear una orden de pago segura en PayPal.
    * El backend calcula el precio correcto y devuelve un ID de orden.
    */
-  const createPaypalOrderOnServer = async (): Promise<string> => {
-    try {
-      const response = await fetch('http://localhost:4000/api/create-paypal-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        // Envía la configuración para que el backend calcule el precio.
-        body: JSON.stringify({ customization: chosenColors }),
-      });
-      if (!response.ok) throw new Error('Error en el servidor al crear la orden.');
-      const order = await response.json();
-      return order.id; // Devuelve solo el ID de la orden.
-    } catch (error) {
-      console.error("Error al crear la orden de PayPal:", error);
-      alert("No se pudo iniciar el pago. Inténtalo de nuevo.");
-      return Promise.reject(error);
-    }
-  };
+  // const createPaypalOrderOnServer = async (): Promise<string> => {
+  //   try {
+  //     const response = await fetch('http://localhost:4000/api/create-paypal-order', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       // Envía la configuración para que el backend calcule el precio.
+  //       body: JSON.stringify({ customization: chosenColors }),
+  //     });
+  //     if (!response.ok) throw new Error('Error en el servidor al crear la orden.');
+  //     const order = await response.json();
+  //     return order.id; // Devuelve solo el ID de la orden.
+  //   } catch (error) {
+  //     console.error("Error al crear la orden de PayPal:", error);
+  //     alert("No se pudo iniciar el pago. Inténtalo de nuevo.");
+  //     return Promise.reject(error);
+  //   }
+  // };
 
-  /**
+  /*
    * Llama al backend para que verifique la transacción con la API de PayPal.
    */
-  const verifyPaypalPaymentOnServer = async (orderID: string): Promise<boolean> => {
-    try {
-      const response = await fetch('http://localhost:4000/api/verify-paypal-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        // Envía el ID de la orden para que el servidor la verifique.
-        body: JSON.stringify({ orderID, customization: chosenColors, screenshot }),
-      });
-      if (!response.ok) throw new Error('La verificación del pago falló en el servidor.');
-      console.log("Pago verificado exitosamente por el servidor.");
-      return true;
-    } catch (error) {
-      console.error("Error en la verificación del pago:", error);
-      alert("Hubo un problema al verificar tu pago. Por favor, contacta a soporte.");
-      return false;
-    }
-  };
+  // const verifyPaypalPaymentOnServer = async (orderID: string): Promise<boolean> => {
+  //   try {
+  //     const response = await fetch('http://localhost:4000/api/verify-paypal-payment', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       // Envía el ID de la orden para que el servidor la verifique.
+  //       body: JSON.stringify({ orderID, customization: chosenColors, screenshot }),
+  //     });
+  //     if (!response.ok) throw new Error('La verificación del pago falló en el servidor.');
+  //     console.log("Pago verificado exitosamente por el servidor.");
+  //     return true;
+  //   } catch (error) {
+  //     console.error("Error en la verificación del pago:", error);
+  //     alert("Hubo un problema al verificar tu pago. Por favor, contacta a soporte.");
+  //     return false;
+  //   }
+  // };
   // ==================================================================
   // FIN DE LAS FUNCIONES DE PAGO SEGURO
   // ==================================================================
@@ -193,100 +193,102 @@ const MixoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
   // Función para abrir el modal de pago
   const handleOpenPayment = useCallback(() => {
     // Guardar posición y configuración actual de la cámara
-    const originalPos = cameraRef.current?.position.clone();
-    const originalTarget = controlsRef.current?.target.clone();
-    const originalFov = cameraRef.current?.fov;
+    // const originalPos = cameraRef.current?.position.clone();
+    // const originalTarget = controlsRef.current?.target.clone();
+    // const originalFov = cameraRef.current?.fov;
 
-    // Mover a la posición inicial (frontal) - usar la vista normal mejorada
-    const initialPos = CAMERA_VIEWS.normal.pos.clone();
-    const initialTarget = CAMERA_VIEWS.normal.target.clone();
-    cameraRef.current!.position.copy(initialPos);
-    cameraRef.current!.fov = 35; // FOV ligeramente más amplio para mejor vista
-    cameraRef.current!.updateProjectionMatrix();
-    if (controlsRef.current) {
-      controlsRef.current.target.copy(initialTarget);
-      controlsRef.current.update();
-    }
+    // // Mover a la posición inicial (frontal) - usar la vista normal mejorada
+    // const initialPos = CAMERA_VIEWS.normal.pos.clone();
+    // const initialTarget = CAMERA_VIEWS.normal.target.clone();
+    // cameraRef.current!.position.copy(initialPos);
+    // cameraRef.current!.fov = 35; // FOV ligeramente más amplio para mejor vista
+    // cameraRef.current!.updateProjectionMatrix();
+    // if (controlsRef.current) {
+    //   controlsRef.current.target.copy(initialTarget);
+    //   controlsRef.current.update();
+    // }
 
-    setTimeout(() => {
-      rendererRef.current!.render(sceneRef.current!, cameraRef.current!);
-      const img = rendererRef.current!.domElement.toDataURL('image/png');
-      setScreenshot(img);
+    // setTimeout(() => {
+    //   rendererRef.current!.render(sceneRef.current!, cameraRef.current!);
+    //   const img = rendererRef.current!.domElement.toDataURL('image/png');
+    //   setScreenshot(img);
 
-      // Restaurar posición, target y FOV originales
-      cameraRef.current!.position.copy(originalPos!);
-      cameraRef.current!.fov = originalFov!;
-      cameraRef.current!.updateProjectionMatrix();
-      if (controlsRef.current && originalTarget) {
-        controlsRef.current.target.copy(originalTarget);
-        controlsRef.current.update();
-      }
-      setShowPaymentModal(true);
-    }, 50);
+    //   // Restaurar posición, target y FOV originales
+    //   cameraRef.current!.position.copy(originalPos!);
+    //   cameraRef.current!.fov = originalFov!;
+    //   cameraRef.current!.updateProjectionMatrix();
+    //   if (controlsRef.current && originalTarget) {
+    //     controlsRef.current.target.copy(originalTarget);
+    //     controlsRef.current.update();
+    //   }
+    //   setShowPaymentModal(true);
+    // }, 50);
+    alert('Payment functionality is disabled in static mode.');
   }, [rendererRef, sceneRef, cameraRef, controlsRef, CAMERA_VIEWS, setScreenshot, setShowPaymentModal]);
 
   // Función para manejar el checkout de PayU localmente
   const handlePayUCheckoutLocal = () => {
-    const popupTarget = 'payu_checkout';
-    let popupRef = window.open('', popupTarget);
+    // const popupTarget = 'payu_checkout';
+    // let popupRef = window.open('', popupTarget);
     
-    if (!popupRef) {
-      alert('Please allow popups to continue with payment');
-      return;
-    }
+    // if (!popupRef) {
+    //   alert('Please allow popups to continue with payment');
+    //   return;
+    // }
 
-    // Obtener configuración de la moneda seleccionada
-    const currencyConfig = getMixoCurrencyConfig(selectedCurrency);
+    // // Obtener configuración de la moneda seleccionada
+    // const currencyConfig = getMixoCurrencyConfig(selectedCurrency);
     
-    // Generar firma localmente
-    const signatureString = `${PAYU_CONFIG.API_KEY}~${PAYU_CONFIG.MERCHANT_ID}~${payuData.referenceCode}~${currencyConfig.amount}~${selectedCurrency}`;
-    const signature = MD5(signatureString).toString();
+    // // Generar firma localmente
+    // const signatureString = `${PAYU_CONFIG.API_KEY}~${PAYU_CONFIG.MERCHANT_ID}~${payuData.referenceCode}~${currencyConfig.amount}~${selectedCurrency}`;
+    // const signature = MD5(signatureString).toString();
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = currencyConfig.url;
-    form.target = popupTarget;
+    // const form = document.createElement('form');
+    // form.method = 'POST';
+    // form.action = currencyConfig.url;
+    // form.target = popupTarget;
 
-    const formData = {
-      merchantId: PAYU_CONFIG.MERCHANT_ID,
-      accountId: currencyConfig.accountId,
-      description: `Mixo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
-      referenceCode: payuData.referenceCode,
-      amount: currencyConfig.amount,
-      currency: selectedCurrency,
-      buyerEmail: payuData.buyerEmail,
-      signature: signature,
-      test: PAYU_CONFIG.TEST_MODE ? '1' : '0',
-      confirmationUrl: PAYU_CONFIG.CONFIRMATION_URL,
-      responseUrl: PAYU_CONFIG.RESPONSE_URL,
-      // Parámetros para forzar moneda y país
-      lng: currencyConfig.language,
-      // Datos del modal para el webhook
-      extra1: 'Mixo',
-      extra2: chosenColors.chasis || 'Custom',
-      extra3: `Applied colors - Faders: ${Object.keys(chosenColors.faders || {}).length}`,
-      extra4: `Mixo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
-      // Additional parameters for PayU
-      payerCountry: 'CO',
-      payerCity: 'Bogota',
-      payerPhone: '+57-300-1234567',
-      // Forzar configuración regional
-      country: 'CO',
-      // Evitar detección automática de ubicación
-      ipAddress: '8.8.4.4'
-    };
+    // const formData = {
+    //   merchantId: PAYU_CONFIG.MERCHANT_ID,
+    //   accountId: currencyConfig.accountId,
+    //   description: `Mixo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
+    //   referenceCode: payuData.referenceCode,
+    //   amount: currencyConfig.amount,
+    //   currency: selectedCurrency,
+    //   buyerEmail: payuData.buyerEmail,
+    //   signature: signature,
+    //   test: PAYU_CONFIG.TEST_MODE ? '1' : '0',
+    //   confirmationUrl: PAYU_CONFIG.CONFIRMATION_URL,
+    //   responseUrl: PAYU_CONFIG.RESPONSE_URL,
+    //   // Parámetros para forzar moneda y país
+    //   lng: currencyConfig.language,
+    //   // Datos del modal para el webhook
+    //   extra1: 'Mixo',
+    //   extra2: chosenColors.chasis || 'Custom',
+    //   extra3: `Applied colors - Faders: ${Object.keys(chosenColors.faders || {}).length}`,
+    //   extra4: `Mixo Configurator - ${selectedCurrency} ${currencyConfig.symbol}${currencyConfig.amount}`,
+    //   // Additional parameters for PayU
+    //   payerCountry: 'CO',
+    //   payerCity: 'Bogota',
+    //   payerPhone: '+57-300-1234567',
+    //   // Forzar configuración regional
+    //   country: 'CO',
+    //   // Evitar detección automática de ubicación
+    //   ipAddress: '8.8.4.4'
+    // };
 
-    Object.entries(formData).forEach(([key, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      form.appendChild(input);
-    });
+    // Object.entries(formData).forEach(([key, value]) => {
+    //   const input = document.createElement('input');
+    //   input.type = 'hidden';
+    //   input.name = key;
+    //   input.value = value;
+    //   form.appendChild(input);
+    // });
 
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+    // document.body.appendChild(form);
+    // form.submit();
+    // document.body.removeChild(form);
+    alert('Payment functionality is disabled in static mode.');
   };
 
   // Referencias para la posición inicial de la cámara
@@ -1087,8 +1089,15 @@ Best regards.`;
     }
   };
 
+  const [sidebarFiles, setSidebarFiles] = useState<File[]>([]);
+  const handleSidebarFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSidebarFiles(Array.from(e.target.files));
+    }
+  };
+
       return (
-      <PayPalScriptProvider options={{ clientId: PAYPAL_CLIENT_ID, currency: "USD" }}>
+      // <PayPalScriptProvider options={{ clientId: PAYPAL_CLIENT_ID, currency: "USD" }}>
         {/* Pantalla de rotación para móviles */}
         {!isLandscape && window.innerWidth <= 768 && (
           <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center text-white text-center p-8">
@@ -1196,10 +1205,10 @@ Best regards.`;
             <div ref={mountRef} className="w-full h-full transition-all duration-300" onClick={handleCanvasClick} style={{ position: "relative", zIndex: 1 }} />
             {currentView === 'normal' && (
               <button
-                onClick={handleFinalizeOpenModal}
+                onClick={() => alert('Payment functionality is disabled in static mode.')}
                 className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 text-lg font-bold uppercase tracking-wide text-black bg-purple-400 border-none rounded cursor-pointer transition-all duration-200 shadow-lg hover:bg-yellow-200 hover:scale-105 hover:shadow-xl"
               >
-                Finish and Send Configuration
+                Configuration Summary (Payments Disabled)
               </button>
             )}
           </div>
@@ -1562,7 +1571,7 @@ Best regards.`;
           </div>
         )}
       </div>
-    </PayPalScriptProvider>
+    // </PayPalScriptProvider>
   );
 };
 
