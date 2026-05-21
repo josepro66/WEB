@@ -252,14 +252,19 @@ const WavoConfigurator: React.FC<WavoConfiguratorProps> = ({ currentUser, onLogo
         newSelectable.chasis.push(child);
         initialChosen.chasis = colorName;
       }
-      // Knobs / Dials / Encoders
-      else if (meshName.includes('encoder')) {
+      // Knobs / Dials / Encoders (varios nombres posibles según el GLB)
+      else if (
+        meshName.includes('encoder') ||
+        meshName.includes('knob') ||
+        meshName.includes('dial') ||
+        meshName.includes('pot')
+      ) {
         const savedName = initialChosen.knobs[child.name];
         const defaultColor = savedName && PALETTES.knobs[savedName] ? savedName : 'Negro';
-        child.material = new THREE.MeshStandardMaterial({ 
-          color: PALETTES.knobs[defaultColor].hex, 
-          metalness: 0, 
-          roughness: 1 
+        child.material = new THREE.MeshStandardMaterial({
+          color: PALETTES.knobs[defaultColor].hex,
+          metalness: 0.3,
+          roughness: 0.7
         });
         newSelectable.knobs.push(child);
         initialChosen.knobs[child.name] = defaultColor;
@@ -596,40 +601,44 @@ const WavoConfigurator: React.FC<WavoConfiguratorProps> = ({ currentUser, onLogo
         }
       });
     }
-    else if (currentView === 'knobs' && selectedKnobs.length > 0) {
+    else if (currentView === 'knobs') {
+      // Si hay selección individual usa esa; si no, aplica a TODOS los encoders
+      const targets = selectedKnobs.length > 0 ? selectedKnobs : selectable.knobs;
       const nextKnobs = { ...chosenColors.knobs };
-      selectedKnobs.forEach(mesh => {
+      targets.forEach(mesh => {
         if (mesh.material && 'color' in mesh.material) {
           (mesh.material as THREE.MeshStandardMaterial).color.setHex(hexVal);
         }
         nextKnobs[mesh.name] = name;
       });
       setChosenColors(prev => ({ ...prev, knobs: nextKnobs }));
-      selectedKnobs.forEach(k => setEmissive(k, 0x000000));
+      targets.forEach(k => setEmissive(k, 0x000000));
       setSelectedKnobs([]);
     }
-    else if (currentView === 'buttons' && selectedButtons.length > 0) {
+    else if (currentView === 'buttons') {
+      const targets = selectedButtons.length > 0 ? selectedButtons : selectable.buttons;
       const nextButtons = { ...chosenColors.buttons };
-      selectedButtons.forEach(mesh => {
+      targets.forEach(mesh => {
         if (mesh.material && 'color' in mesh.material) {
           (mesh.material as THREE.MeshStandardMaterial).color.setHex(hexVal);
         }
         nextButtons[mesh.name] = name;
       });
       setChosenColors(prev => ({ ...prev, buttons: nextButtons }));
-      selectedButtons.forEach(b => setEmissive(b, 0x000000));
+      targets.forEach(b => setEmissive(b, 0x000000));
       setSelectedButtons([]);
     }
-    else if (currentView === 'keys' && selectedKeys.length > 0) {
+    else if (currentView === 'keys') {
+      const targets = selectedKeys.length > 0 ? selectedKeys : selectable.keys;
       const nextKeys = { ...chosenColors.keys };
-      selectedKeys.forEach(mesh => {
+      targets.forEach(mesh => {
         if (mesh.material && 'color' in mesh.material) {
           (mesh.material as THREE.MeshStandardMaterial).color.setHex(hexVal);
         }
         nextKeys[mesh.name] = name;
       });
       setChosenColors(prev => ({ ...prev, keys: nextKeys }));
-      selectedKeys.forEach(k => setEmissive(k, 0x000000));
+      targets.forEach(k => setEmissive(k, 0x000000));
       setSelectedKeys([]);
     }
   }, [currentView, selectable, selectedKnobs, selectedButtons, selectedKeys, chosenColors, setEmissive]);
@@ -934,7 +943,9 @@ Saludos cordiales.`;
                 {currentView}
               </p>
               <p style={{ margin: '4px 0 0 0', fontSize: '11px', color: '#9ca3af' }}>
-                Selecciona colores en la paleta para personalizar.
+                {currentView === 'chasis'
+                  ? 'Elige un color para aplicar al chasis.'
+                  : 'Haz clic en una pieza del modelo para seleccionarla, o elige un color para aplicarlo a todas las piezas de esta sección.'}
               </p>
             </div>
 
