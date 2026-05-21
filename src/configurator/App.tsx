@@ -48,6 +48,16 @@ function App() {
 
   // Verificar si hay un usuario logueado al cargar la app y leer parámetros URL
   useEffect(() => {
+    const bg = `url('${import.meta.env.BASE_URL}textures/fondo.jpg')`;
+    document.documentElement.style.backgroundImage = bg;
+    document.body.style.backgroundImage = bg;
+    return () => {
+      document.documentElement.style.backgroundImage = '';
+      document.body.style.backgroundImage = '';
+    };
+  }, []);
+
+  useEffect(() => {
     const savedUser = localStorage.getItem('beato_currentUser');
     if (savedUser) {
       try {
