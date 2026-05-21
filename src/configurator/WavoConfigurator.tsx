@@ -213,6 +213,11 @@ const WavoConfigurator: React.FC<WavoConfiguratorProps> = ({ currentUser, onLogo
     
     let initialChosen = { ...chosenColors };
 
+    console.log('[Wavo] prepareModelParts - all nodes:');
+    model.traverse((child: THREE.Object3D) => {
+      console.log(`  [${child.type}] name="${child.name}"`);
+    });
+
     model.traverse((child: THREE.Object3D) => {
       if (!(child instanceof THREE.Mesh)) return;
       child.castShadow = true;
@@ -300,6 +305,9 @@ const WavoConfigurator: React.FC<WavoConfiguratorProps> = ({ currentUser, onLogo
       }
     });
 
+    console.log('[Wavo] selectable.knobs found:', newSelectable.knobs.map(m => m.name));
+    console.log('[Wavo] selectable.buttons found:', newSelectable.buttons.map(m => m.name));
+    console.log('[Wavo] selectable.chasis found:', newSelectable.chasis.map(m => m.name));
     setSelectable(newSelectable);
     setChosenColors(initialChosen);
   }, []);
@@ -592,6 +600,7 @@ const WavoConfigurator: React.FC<WavoConfiguratorProps> = ({ currentUser, onLogo
   // Aplicar color de la paleta seleccionada
   const applyColor = useCallback((name: string, colorData: PaletteColor) => {
     const hexVal = parseInt(colorData.hex.replace('#', ''), 16);
+    console.log('[Wavo] applyColor:', name, '| view:', currentView, '| selectable.knobs:', selectable.knobs.length, '| selectedKnobs:', selectedKnobs.length);
 
     if (currentView === 'chasis') {
       setChosenColors(prev => ({ ...prev, chasis: name }));
